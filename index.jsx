@@ -1,0 +1,131 @@
+import React, { useState, useEffect } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import { Card, CardContent } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { Github, Linkedin, Mail, ChevronLeft, ChevronRight } from "lucide-react";
+
+export default function App() {
+  const [page, setPage] = useState("home");
+  const [transitioning, setTransitioning] = useState(false);
+  const [selectedImageIndex, setSelectedImageIndex] = useState(null);
+
+  const gradients = {
+    home: "radial-gradient(circle at center, #e0f2ff, #ffffff 70%)",
+    tentang: "linear-gradient(135deg,#ffffff,#e6f5ff)",
+    karya: "linear-gradient(135deg,#e6f5ff,#fff7e6)",
+    project: "linear-gradient(135deg,#fff7e6,#f3f4f6)",
+    prestasi: "linear-gradient(135deg,#e6f0ff,#ffffff)",
+  };
+
+  const [bg, setBg] = useState(gradients.home);
+  useEffect(() => setBg(gradients[page] || gradients.home), [page]);
+
+  const navigate = (to) => {
+    if (to === page || transitioning) return;
+    setTransitioning(true);
+    setTimeout(() => {
+      setPage(to);
+      setTimeout(() => setTransitioning(false), 600);
+    }, 400);
+  };
+
+  const pageVariants = {
+    initial: { opacity: 0, y: 20 },
+    animate: { opacity: 1, y: 0, transition: { duration: 0.6 } },
+    exit: { opacity: 0, y: -20, transition: { duration: 0.3 } },
+  };
+
+  const karyaList = [
+    { title: "Desain 3D Background Panggung Gembira 625", desc: "Desain Background 3D untuk pagelaran seni akbar - Panggung Gembira 625 -.", img: "https://lh3.googleusercontent.com/d/1Q0YWmEJMs2dAOf_QdwSY0vuqGfFxXzCj=s600" },
+    { title: "Logo dan Maskot Panggung Gembira 625", desc: "Logo dan maskot iconic untuk pagelaran seni akbar - Panggung Gembira 625 -.", img: "https://lh3.googleusercontent.com/d/1-IjJRj9S0A4LXrxBQv94ZHQ6X_duY8xX=s600" },
+    { title: "Desain Feed Instagram @dignifiedgeneration", desc: "Konsep konten visual untuk media sosial Instagram Dignified Generation.", img: "https://lh3.googleusercontent.com/d/1bD3pIjGgq_OGI1x31_BaRkSJp2cwg-MQ=s600" },
+  ];
+
+  const projectList = [
+    { title: "Website Portfolio", desc: "Situs pribadi untuk menampilkan karya.", img: "https://lh3.googleusercontent.com/d/1XPnjlzl-7YXCH0vTLN35hJ2JjPqsr1gZ=s600" },
+    { title: "Dashboard Analitik", desc: "UI dashboard berbasis data visual.", img: "https://via.placeholder.com/400x250?text=Project+2" },
+    { title: "Aplikasi Galeri Desain", desc: "Beberapa proyek kreatif yang telah saya kerjakan.", img: "https://via.placeholder.com/400x250?text=Project+3" },
+  ];
+
+  const prestasiList = [
+    { title: "Peraih medali perak National Olympiad of Academic (NOA) 2024 bidang Biologi", img: "https://lh3.googleusercontent.com/d/1gUWVC-yJPlH3TkSWRI8dGINUoPDmF9s8=s600" },
+    { title: "Peraih medali perunggu Pekan Kompetisi Akademik Nasional (PKAN) 2024 bidang Informatika", img: "https://lh3.googleusercontent.com/d/1tSMsajVxkGjsCCs0Nv8_LBGqre5CDXzF=s600" },
+    { title: "Peraih medali emas Olimpiade Siswa Tingkat Nasional (OSTN) 2024 bidang Kimia", img: "https://lh3.googleusercontent.com/d/1Nc_uc_jGXn7tWOMRwavzqz8vnsCb6Dgo=s600" },
+    { title: "Peraih medali perak Olimpiade Siswa Tingkat Nasional (OSTN) 2024 bidang Fisika", img: "https://lh3.googleusercontent.com/d/1QZzmJ4ZOWZ62mn9hsFv0Rkm3gj_7pMi1=s600" },
+    { title: "Peraih medali perak Olimpiade Nasional Sains dan Bahasa (ONSB) 2025 bidang Matematika", img: "https://lh3.googleusercontent.com/d/15VK-kYNfmHvPamg57dKAxqRYXcKlcjWo=s600" },
+    { title: "Peraih medali Emas Pekan Olimpiade Sains, Bahasa dan Agama Nasional (POSBASNAS) 2025 bidang Fisika", img: "https://lh3.googleusercontent.com/d/1xypJOs0N2_4P3Gm5herpW5PjI73H0FYh=s600" },
+    { title: "Peraih medali Perunggu Pekan Olimpiade Sains, Bahasa dan Agama Nasional (POSBASNAS) 2025 bidang Matematika", img: "https://lh3.googleusercontent.com/d/1WSMzp26r0CoExmftsPv5aLCw9QmiDRNI=s600" },
+    { title: "Peraih medali emas Indonesian Science Academic Competition (ISAC) 2025 bidang Biologi", img: "https://lh3.googleusercontent.com/d/1vbuuVCYXttExdauAqzrJHaV0-x508fu8=s600" },
+    { title: "Peraih medali emas Olimpiade Pelajar (OPN) 2025 bidang Kimia", img: "https://lh3.googleusercontent.com/d/1jcUo6IfuWe649ZoCj59wvspdCvideNcw=s600" },
+    { title: "Peraih medali emas Olimpiade Pelajar (OPN) 2025 bidang Bahasa Inggris", img: "https://lh3.googleusercontent.com/d/1F0IVt2FB7jjqnFkXiaZ-pq115PXbITf_=s600" },
+  ];
+
+  const skills = [
+    { name: "Adobe Photoshop", level: 78 },
+    { name: "Adobe After Effects", level: 85 },
+    { name: "Capcut", level: 90 },
+    { name: "CorelDraw", level: 95 },
+    { name: "Figma", level: 70 },
+    { name: "Canva", level: 95 },
+    { name: "C++", level: 70 },
+  ];
+
+  const galleryImages = [...karyaList.map(k => k.img), ...prestasiList.map(p => p.img)];
+
+  useEffect(() => {
+    function handleKey(e) {
+      if (e.key === "Escape") setSelectedImageIndex(null);
+      if (e.key === "ArrowRight") nextImage();
+      if (e.key === "ArrowLeft") prevImage();
+    }
+    window.addEventListener("keydown", handleKey);
+    return () => window.removeEventListener("keydown", handleKey);
+  }, [selectedImageIndex]);
+
+  const nextImage = () => {
+    if (selectedImageIndex === null) return;
+    setSelectedImageIndex((prev) => (prev + 1) % galleryImages.length);
+  };
+
+  const prevImage = () => {
+    if (selectedImageIndex === null) return;
+    setSelectedImageIndex((prev) => (prev - 1 + galleryImages.length) % galleryImages.length);
+  };
+
+  return (
+    <div className="min-h-screen transition-colors duration-500" style={{ background: bg }}>
+      <header className="flex justify-between items-center p-6 fixed top-0 left-0 right-0 bg-white/80 backdrop-blur-md shadow z-50">
+        <h1 className="text-2xl font-bold text-blue-700">MUHAMMAD NOUVAL AR-RIZQY</h1>
+        <nav className="space-x-4">
+          {['home', 'tentang', 'karya', 'project', 'prestasi'].map((p) => (
+            <Button key={p} variant={page === p ? 'default' : 'outline'} onClick={() => navigate(p)}>
+              {p.charAt(0).toUpperCase() + p.slice(1)}
+            </Button>
+          ))}
+        </nav>
+      </header>
+
+      </AnimatePresence>
+
+      <section className="py-16 text-center">
+        <h2 className="text-3xl font-semibold mb-4">Hubungi Saya</h2>
+        <p className="text-gray-600 mb-6">Tertarik bekerja sama atau ingin berdiskusi?</p>
+        <div className="flex justify-center gap-6">
+          <a href="mailto:bagobago955@gmail.com" aria-label="email"><Mail className="w-6 h-6" /></a>
+          <a href="https://github.com/bagobago955-desainer" target="_blank" rel="noopener noreferrer" aria-label="github"><Github className="w-6 h-6" /></a>
+          <a href="https://www.linkedin.com/in/muhammad-nouval-ar-rizqy-9ba777378" target="_blank" rel="noopener noreferrer" aria-label="linkedin"><Linkedin className="w-6 h-6" /></a>
+        </div>
+      </section>
+
+      <AnimatePresence>
+        {selectedImageIndex !== null && (
+          <motion.div className="fixed inset-0 bg-black/80 flex items-center justify-center z-50 p-4" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} onClick={() => setSelectedImageIndex(null)}>
+            <motion.img src={galleryImages[selectedImageIndex]} alt="Preview" initial={{ scale: 0.9, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} exit={{ scale: 0.9, opacity: 0 }} className="max-w-full max-h-[90vh] object-contain rounded-lg shadow-lg" onClick={(e) => e.stopPropagation()} />
+            <button onClick={(e) => { e.stopPropagation(); prevImage(); }} className="absolute left-4 text-white hover:text-gray-300"><ChevronLeft className="w-10 h-10" /></button>
+            <button onClick={(e) => { e.stopPropagation(); nextImage(); }} className="absolute right-4 text-white hover:text-gray-300"><ChevronRight className="w-10 h-10" /></button>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </div>
+  );
+}
